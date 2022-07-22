@@ -1,5 +1,6 @@
 package pl.coderslab.charity.donation;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,8 @@ import pl.coderslab.charity.Institution.Institution;
 import pl.coderslab.charity.category.Category;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;

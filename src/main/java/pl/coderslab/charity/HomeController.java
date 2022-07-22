@@ -16,8 +16,12 @@ public class HomeController {
 
     @RequestMapping("/")
     public String homeAction(Model model) {
+        if (donationRepository.sumDonatedBags() == null) {
+            model.addAttribute("donatedBags", "0");
+        } else {
+            model.addAttribute("donatedBags", donationRepository.sumDonatedBags());
+        }
         model.addAttribute("foundations", institutionRepository.findAll());
-        model.addAttribute("donatedBags", donationRepository.sumDonatedBags());
         model.addAttribute("donatedCategory", donationRepository.countDonatedCategory());
         return "index";
     }

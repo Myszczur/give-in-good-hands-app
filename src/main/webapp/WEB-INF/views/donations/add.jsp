@@ -4,18 +4,30 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
-<%@ include file="/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="/WEB-INF/header.jsp" %>
 
 <body>
 <header class="header--form-page">
     <nav class="container container--70">
         <ul class="nav--actions">
             <li class="logged-user">
-                Witaj Agata
+<%--                Witaj Agata--%>
+                <sec:authorize access="isAuthenticated()">
+                    <p>Witaj: <sec:authentication property="principal.username"/></p>
+                </sec:authorize>
+
                 <ul class="dropdown">
                     <li><a href="#">Profil</a></li>
                     <li><a href="#">Moje zbiórki</a></li>
-                    <li><a href="#">Wyloguj</a></li>
+                    <li> <sec:authorize access="isAuthenticated()">
+                        <form action="<c:url value="/logout"/>" method="post">
+                            <input type="submit" value="Wyloguj">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        </form>
+                    </sec:authorize>
+                    </li>
+<%--                    <li><a href="#">Wyloguj</a></li>--%>
                 </ul>
             </li>
         </ul>
@@ -79,7 +91,7 @@
 
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
-        <form:form method="post" modelAttribute="donation" action="form-confirmation.html" name="frm1">
+        <form:form method="post" modelAttribute="donation" name="frm1">
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
@@ -124,7 +136,7 @@
                     <label>
                         Liczba 60l worków:
                         <form:input path="quantity" type="number" step="1" min="1" id="quantity"/>
-                            <%--                <form:errors path="quantity" cssClass="error"/>--%>
+                        <form:errors path="quantity" cssClass="error"/>
                     </label>
                 </div>
 
@@ -253,4 +265,4 @@
     </div>
 </section>
 
-<%@ include file="/footer.jsp" %>
+<%@ include file="/WEB-INF/footer.jsp" %>

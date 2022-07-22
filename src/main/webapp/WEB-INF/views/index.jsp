@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ include file="/header.jsp" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ include file="/WEB-INF/header.jsp" %>
 
 <header class="header--main-page">
     <nav class="container container--70">
@@ -118,4 +119,4 @@
     </div>
 </section>
 
-<%@ include file="/footer.jsp" %>
+<%@ include file="/WEB-INF/footer.jsp" %>
