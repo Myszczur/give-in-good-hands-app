@@ -1,11 +1,12 @@
-package pl.coderslab.charity.users;
+package pl.coderslab.charity.service;
 
 import org.springframework.stereotype.Service;
+import pl.coderslab.charity.model.User;
 
 @Service
 public interface UserService {
 
-    User findByUserName(String name);
+    User findByEmail(String email);
 
     void saveUser(User user);
 }

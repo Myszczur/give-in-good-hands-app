@@ -7,7 +7,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.ExceptionMappingAuthenticationFailureHandler;
 import pl.coderslab.charity.users.SpringDataUserDetailsService;
+import pl.coderslab.charity.users.SuccessLoginHandler;
+
+import java.util.HashMap;
 
 @Configuration
 @EnableWebSecurity
@@ -17,10 +22,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    @Bean
+    public AuthenticationSuccessHandler successHandler(){
+        return new SuccessLoginHandler();
+    }
 
     @Bean
     public SpringDataUserDetailsService customUserDetailsService() {
         return new SpringDataUserDetailsService();
+    }
+
+    @Bean
+    public ExceptionMappingAuthenticationFailureHandler loginMappingFailureHandler() {
+        ExceptionMappingAuthenticationFailureHandler exceptionMapping = new ExceptionMappingAuthenticationFailureHandler();
+        HashMap<String, String> failureUrlMap = new HashMap<String, String>();
+        failureUrlMap.put("org.springframework.security.authentication.BadCredentialsException", "/login/error");
+        failureUrlMap.put("org.springframework.security.authentication.CredentialsExpiredException", "/login/error");
+        failureUrlMap.put("org.springframework.security.authentication.AuthenticationServiceException", "/login/error");
+        exceptionMapping.setExceptionMappings(failureUrlMap);
+        return exceptionMapping;
     }
 
     @Override
@@ -35,10 +55,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/donations/**").authenticated()
-                .and().formLogin().loginPage("/login")
+                .antMatchers("/donations/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .and().formLogin().loginPage("/login").usernameParameter("email")
+                .defaultSuccessUrl("/")
+                .successHandler(successHandler())
+                .failureHandler(loginMappingFailureHandler())
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll()
-                .and().exceptionHandling().accessDeniedPage("/login/403");
+                .and().exceptionHandling().accessDeniedPage("/login");
     }
 }

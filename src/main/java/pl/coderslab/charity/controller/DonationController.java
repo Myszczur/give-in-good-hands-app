@@ -1,17 +1,15 @@
-package pl.coderslab.charity.donation;
+package pl.coderslab.charity.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.charity.Institution.InstitutionRepository;
-import pl.coderslab.charity.category.CategoryRepository;
-
-import javax.naming.Binding;
-import javax.validation.Valid;
+import pl.coderslab.charity.repository.DonationRepository;
+import pl.coderslab.charity.repository.InstitutionRepository;
+import pl.coderslab.charity.repository.CategoryRepository;
+import pl.coderslab.charity.model.Donation;
 
 @Controller
 @AllArgsConstructor

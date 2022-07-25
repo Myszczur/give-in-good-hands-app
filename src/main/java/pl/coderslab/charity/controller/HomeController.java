@@ -1,11 +1,11 @@
-package pl.coderslab.charity;
+package pl.coderslab.charity.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.coderslab.charity.Institution.InstitutionRepository;
-import pl.coderslab.charity.donation.DonationRepository;
+import pl.coderslab.charity.repository.InstitutionRepository;
+import pl.coderslab.charity.repository.DonationRepository;
 
 
 @Controller
