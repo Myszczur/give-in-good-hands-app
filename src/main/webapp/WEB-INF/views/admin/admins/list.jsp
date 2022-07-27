@@ -52,6 +52,4 @@
         </div>
     </section>
 </header>
-
-
 <%@ include file="/WEB-INF/footer.jsp" %>

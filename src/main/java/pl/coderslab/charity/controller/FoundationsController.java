@@ -9,7 +9,6 @@ import pl.coderslab.charity.model.Institution;
 import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.service.UserService;
 
-import javax.print.attribute.standard.Destination;
 import javax.validation.Valid;
 
 @Controller

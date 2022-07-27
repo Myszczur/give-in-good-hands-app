@@ -3,8 +3,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ include file="/WEB-INF/header.jsp" %>
 
+<!DOCTYPE html>
+<html lang="pl">
+<%@ include file="/WEB-INF/header.jsp" %>
+<body>
 <header class="header--main-page">
     <nav class="container container--70">
         <ul class="nav--actions">
@@ -120,3 +123,7 @@
 </section>
 
 <%@ include file="/WEB-INF/footer.jsp" %>
+<script src="<c:url value="/resources/js/app.js"/>"></script>
+</body>
+</html>
+

@@ -27,7 +27,6 @@ public class UserController {
     private final UserService userService;
     private final UserRepository userRepository;
     private final DonationRepository donationRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
 
 
     @GetMapping("")

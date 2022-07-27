@@ -58,7 +58,7 @@
     </section>
 </header>
 
-<script src="<c:url value="../resources/css/style.css"/>"></script>
+<script src="<c:url value="../../resources/css/style.css"/>"></script>
 </body>
 </html>
 

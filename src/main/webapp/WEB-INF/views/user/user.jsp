@@ -37,12 +37,12 @@
         <div class="contact">
             <span class="description" style="font-size: 180%"><h3>Twoje dary</h3></span>
 
-<%--            <c:forEach items="${userList}" var="userList">--%>
+<%--            <c:forEach items="${currentUserDonations}" var="currentUserDonations">--%>
 <%--                <div class="steps--container">--%>
 <%--                <span class="description" style="font-size: 180%">--%>
-<%--                    <div class="title">Email: ${userList.email}</div>--%>
-<%--                    <div class="title">Imię: ${userList.firstName}</div>--%>
-<%--                    <div class="title">Nazwisko: ${userList.lastName}</div>--%>
+<%--                    <div class="title">Email: ${currentUserDonations.email}</div>--%>
+<%--                    <div class="title">Imię: ${currentUserDonations.firstName}</div>--%>
+<%--                    <div class="title">Nazwisko: ${currentUserDonations.lastName}</div>--%>
 <%--                </span>--%>
 <%--                    <span>--%>
 <%--                    <a href="<c:url value="/admin/users/edit?id=${userList.id}"/>" class="btn">Edytuj</a>--%>

@@ -2,6 +2,7 @@ package pl.coderslab.charity.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.coderslab.charity.valid.ValidPassword;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,6 +33,7 @@ public class User {
     @NotBlank(message = "Musisz podać Email")
     private String email;
     @NotBlank(message = "Musisz podać hasło")
+    @ValidPassword(message = "Hasło musi mieć min 8 znaków, 1 wielka litera, 1 małą litera, 1 znak specjalny i 1 liczbę.")
     private String password;
     private String matchingPassword;
     private boolean accountNonBlocked;
