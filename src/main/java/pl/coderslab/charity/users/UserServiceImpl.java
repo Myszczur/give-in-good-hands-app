@@ -22,14 +22,20 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User findByEmail(String username)    {
-        return userRepository.findByEmail(username);
+    public User findByEmail(String email)    {
+        return userRepository.findByEmail(email);
+    }
+    @Override
+    public boolean checkIfUserExist(String email) {
+        return userRepository.findByEmail(email) !=null ? true : false;
     }
 
     @Override
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setMatchingPassword(passwordEncoder.encode(user.getMatchingPassword()));
         user.setEnabled(true);
+        user.setAccountNonBlocked(true);
         Role userRole = roleRepository.findByName("ROLE_USER");
         user.setRoles(new HashSet<>(List.of(userRole)));
         userRepository.save(user);

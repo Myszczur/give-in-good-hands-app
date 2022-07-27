@@ -17,7 +17,7 @@ public class LoginController {
     }
 
     @GetMapping("/login/{error}")
-    public String loginError(Model model, @PathVariable String error) {
+    public String loginError(@PathVariable String error, Model model) {
         model.addAttribute("error", error);
         return "/login/login";
     }

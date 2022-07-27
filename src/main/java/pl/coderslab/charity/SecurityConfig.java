@@ -2,6 +2,10 @@ package pl.coderslab.charity;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.CredentialsExpiredException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,8 +26,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public AuthenticationSuccessHandler successHandler(){
+    public AuthenticationSuccessHandler successHandler() {
         return new SuccessLoginHandler();
     }
 
@@ -33,22 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public ExceptionMappingAuthenticationFailureHandler loginMappingFailureHandler() {
+    public ExceptionMappingAuthenticationFailureHandler loginFailureHandler() {
         ExceptionMappingAuthenticationFailureHandler exceptionMapping = new ExceptionMappingAuthenticationFailureHandler();
         HashMap<String, String> failureUrlMap = new HashMap<String, String>();
-        failureUrlMap.put("org.springframework.security.authentication.BadCredentialsException", "/login/error");
-        failureUrlMap.put("org.springframework.security.authentication.CredentialsExpiredException", "/login/error");
-        failureUrlMap.put("org.springframework.security.authentication.AuthenticationServiceException", "/login/error");
+        failureUrlMap.put(BadCredentialsException.class.getCanonicalName(), "/login/error");
+        failureUrlMap.put(CredentialsExpiredException.class.getCanonicalName(), "/login/error");
+        failureUrlMap.put(AuthenticationServiceException.class.getCanonicalName(), "/login/error");
+        failureUrlMap.put(LockedException.class.getCanonicalName(), "/login/locked");
+
         exceptionMapping.setExceptionMappings(failureUrlMap);
         return exceptionMapping;
-    }
-
-    @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user1").password("{noop}user123").roles("USER")
-                .and()
-                .withUser("admin1").password("{noop}admin123").roles("ADMIN");
     }
 
     @Override
@@ -56,11 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/donations/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .and().formLogin().loginPage("/login").usernameParameter("email")
                 .defaultSuccessUrl("/")
                 .successHandler(successHandler())
-                .failureHandler(loginMappingFailureHandler())
+                .failureHandler(loginFailureHandler())
                 .and().logout().logoutSuccessUrl("/")
                 .permitAll()
                 .and().exceptionHandling().accessDeniedPage("/login");

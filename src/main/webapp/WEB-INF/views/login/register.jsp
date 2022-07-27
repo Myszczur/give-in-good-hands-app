@@ -9,7 +9,6 @@
       <nav class="container container--70">
         <ul class="nav--actions">
           <li><a href="<c:url value="/login"/>">Zaloguj</a></li>
-<%--          <li class="highlighted"><a href="#">Załóż konto</a></li>--%>
         </ul>
 
         <ul>
@@ -40,6 +39,13 @@
         <div class="form-group">
           <form:input type="password" path="password" placeholder="Hasło" required="required"/>
           <form:errors path="password" cssStyle="color: red; margin: 5px; font-size: 15px"/>
+        </div>
+        <div class="form-group">
+          <form:input type="password" path="matchingPassword" placeholder="Powtórz hasło" required="required"/>
+          <form:errors path="matchingPassword" cssStyle="color: red; margin: 5px; font-size: 15px"/>
+          <c:if test="${not empty error}">
+            <p style="color: red; margin: 5px; font-size: 15px">Hasła muszą być podobne</p>
+          </c:if>
         </div>
         <div class="form-group form-group--buttons">
           <a href="<c:url value="/login"/>" class="btn btn--without-border">Zaloguj się</a>
