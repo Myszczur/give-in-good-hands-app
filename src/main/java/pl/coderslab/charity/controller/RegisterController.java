@@ -41,4 +41,16 @@ public class RegisterController {
         model.addAttribute("error", "error");
         return "/login/register";
     }
+
+    @PostMapping("/register/error")
+    public String registerError(@Valid User user, BindingResult result, @RequestParam String matchingPassword) {
+        if(!user.getPassword().equals(matchingPassword)) {
+            return "redirect:/register/error";
+        }
+        if(result.hasErrors()) {
+            return "/login/register";
+        }
+        userService.saveUser(user);
+        return "redirect:/";
+    }
 }

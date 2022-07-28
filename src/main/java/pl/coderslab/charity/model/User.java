@@ -2,9 +2,11 @@ package pl.coderslab.charity.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import pl.coderslab.charity.valid.EmailUnique;
 import pl.coderslab.charity.valid.ValidPassword;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,9 +33,10 @@ public class User {
     private Set<Role> roles;
     @Column(nullable = false, unique = true, length = 60)
     @NotBlank(message = "Musisz podać Email")
+    @EmailUnique(message = "Podany email już istnieje!")
     private String email;
     @NotBlank(message = "Musisz podać hasło")
-    @ValidPassword(message = "Hasło musi mieć min 8 znaków, 1 wielka litera, 1 małą litera, 1 znak specjalny i 1 liczbę.")
+//    @ValidPassword(message = "Hasło musi mieć min 8 znaków, 1 wielka litera, 1 małą litera, 1 znak specjalny i 1 liczbę.")
     private String password;
     private String matchingPassword;
     private boolean accountNonBlocked;
