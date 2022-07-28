@@ -29,7 +29,7 @@ public class RegisterController {
             return "redirect:/register/error";
         }
         if(result.hasErrors()) {
-            return "/register";
+            return "/login/register";
         }
         userService.saveUser(user);
         return "redirect:/";

@@ -38,7 +38,7 @@
         </div>
         <div class="form-group">
           <form:input type="password" path="password" placeholder="Hasło" required="required"/>
-          <form:errors path="password" cssStyle="color: red; margin: 5px; font-size: 15px"/>
+          <div></div><form:errors path="password" cssStyle="color: red; margin: 5px; font-size: 15px"/></div>
         </div>
         <div class="form-group">
           <form:input type="password" path="matchingPassword" placeholder="Powtórz hasło" required="required"/>

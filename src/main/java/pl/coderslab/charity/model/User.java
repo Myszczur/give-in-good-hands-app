@@ -19,10 +19,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Podaj imię")
     private String firstName;
     @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Podaj nazwisko")
     private String lastName;
     private boolean enabled;
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
