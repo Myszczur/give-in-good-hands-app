@@ -54,13 +54,6 @@
                     <form:input type="password" path="password" placeholder="Hasło" required="required"/>
                     <form:errors path="password" cssStyle="color: red; margin: 5px; font-size: 15px"/>
                 </div>
-                <div class="form-group">
-                    <form:input type="password" path="matchingPassword" placeholder="Powtórz hasło" required="required"/>
-                    <form:errors path="matchingPassword" cssStyle="color: red; margin: 5px; font-size: 15px"/>
-                    <c:if test="${not empty error}">
-                        <p style="color: red; margin: 5px; font-size: 15px">Hasła muszą być podobne</p>
-                    </c:if>
-                </div>
                 <div class="form-group form-group--buttons">
                     <button class="btn" type="submit">Dodaj użytkownika</button>
                 </div>

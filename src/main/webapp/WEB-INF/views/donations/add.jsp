@@ -12,7 +12,6 @@
     <nav class="container container--70">
         <ul class="nav--actions">
             <li class="logged-user">
-<%--                Witaj Agata--%>
                 <sec:authorize access="isAuthenticated()">
                     <p>Witaj: <sec:authentication property="principal.username"/></p>
                 </sec:authorize>
@@ -27,7 +26,6 @@
                         </form>
                     </sec:authorize>
                     </li>
-<%--                    <li><a href="#">Wyloguj</a></li>--%>
                 </ul>
             </li>
         </ul>
@@ -91,7 +89,7 @@
 
     <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/4</div>
-        <form:form method="post" modelAttribute="donation" name="frm1">
+        <form:form method="post" modelAttribute="donation">
             <!-- STEP 1: class .active is switching steps -->
             <div data-step="1" class="active">
                 <h3>Zaznacz co chcesz oddać:</h3>
@@ -261,7 +259,6 @@
                 </div>
             </div>
         </form:form>
-
     </div>
 </section>
 

@@ -28,13 +28,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkIfUserExist(String email) {
-        return userRepository.findByEmail(email) == null;
+        return userRepository.findByEmail(email) != null;
+    }
+
+    @Override
+    public void editUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setMatchingPassword(passwordEncoder.encode(user.getMatchingPassword()));
         user.setEnabled(true);
         user.setAccountNonBlocked(true);
         Role userRole = roleRepository.findByName("ROLE_USER");

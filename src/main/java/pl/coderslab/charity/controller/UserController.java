@@ -3,7 +3,6 @@ package pl.coderslab.charity.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,27 +30,36 @@ public class UserController {
 
     @GetMapping("")
     public String userPanel(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        //TODO: Zrobić listę donacji w panelu usera
         User currentUser = userService.findByEmail(userDetails.getUsername());
-        model.addAttribute("currentUserDonations", donationRepository.findAllById(Collections.singleton(currentUser.getId())));
+        model.addAttribute("currentUserDonations",
+                donationRepository.findAllByUserIdOrderByStatusDescReceivedDescCreatedDesc(currentUser.getId()));
         return "/user/user";
     }
 
     @GetMapping("/edit")
     public String edit(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        //TODO: odkodowanie password z bazy dany i wyświetlić w widoku
         User currentUser = userService.findByEmail(userDetails.getUsername());
-//        currentUser.setPassword(passwordEncoder.(currentUser.getPassword()));
-        model.addAttribute("currentUser", currentUser);
+        currentUser.setPassword("");
+        model.addAttribute("user", currentUser);
+
         return "/user/edit";
     }
 
     @PostMapping(value = "/edit")
-    public String edit(@Valid User user, BindingResult result) {
+    public String edit(@Valid User user, BindingResult result, @AuthenticationPrincipal UserDetails userDetails, @RequestParam String passwordToChange, Model model) {
+        User currentUserEdit = userService.findByEmail(userDetails.getUsername());
         if (result.hasErrors()) {
+            currentUserEdit.setPassword("");
+            model.addAttribute("user", currentUserEdit);
             return "/user/edit";
         }
-        userRepository.save(user);
+        if (!passwordToChange.isEmpty()) {
+            currentUserEdit.setPassword(passwordToChange);
+        }
+        currentUserEdit.setEmail(user.getEmail());
+        currentUserEdit.setFirstName(user.getFirstName());
+        currentUserEdit.setLastName(user.getLastName());
+        userService.editUser(currentUserEdit);
         return "redirect:/user";
     }
 

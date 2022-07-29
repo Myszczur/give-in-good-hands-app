@@ -14,6 +14,9 @@
                 </sec:authorize>
 
                 <ul class="dropdown">
+                    <li><a href="<c:url value="/admin/admin"/>">Panel główny</a></li>
+                    <li><a href="<c:url value="/admin/users"/>">Użytkownicy</a></li>
+                    <li><a href="<c:url value="/admin/donations"/>">Dary</a></li>
                     <li> <sec:authorize access="isAuthenticated()">
                         <form action="<c:url value="/logout"/>" method="post">
                             <input type="submit" value="Wyloguj">
@@ -36,21 +39,21 @@
         <div class="contact">
             <span class="description" style="font-size: 180%"><h3>Lista Użytkowników</h3></span>
 
-            <c:forEach items="${userList}" var="userList">
+            <c:forEach items="${usersList}" var="usersList">
                 <div class="steps--container">
                 <span class="description" style="font-size: 180%">
-                    <div class="title">Email: ${userList.email}</div>
-                    <div class="title">Imię: ${userList.firstName}</div>
-                    <div class="title">Nazwisko: ${userList.lastName}</div>
+                    <div class="title">Email: ${usersList.email}</div>
+                    <div class="title">Imię: ${usersList.firstName}</div>
+                    <div class="title">Nazwisko: ${usersList.lastName}</div>
                 </span>
                     <span>
                     <a href="<c:url value="/admin/users/edit?id=${userList.id}"/>" class="btn">Edytuj</a>
-                    <a href="<c:url value="/admin/users/delete/${userList.id}"/>" class="btn">Usuń</a>
-                        <c:if test="${userList.accountNonBlocked == false}">
-                            <a href="<c:url value="/admin/users/block?id=${userList.id}"/>" class="btn">Odblokuj</a>
+                    <a href="<c:url value="/admin/users/delete/${usersList.id}"/>" class="btn">Usuń</a>
+                        <c:if test="${usersList.accountNonBlocked == false}">
+                            <a href="<c:url value="/admin/users/block?id=${usersList.id}"/>" class="btn">Odblokuj</a>
                         </c:if>
-                    <c:if test="${userList.accountNonBlocked == true}">
-                        <a href="<c:url value="/admin/users/block?id=${userList.id}"/>" class="btn">Zablokuj</a>
+                    <c:if test="${usersList.accountNonBlocked == true}">
+                        <a href="<c:url value="/admin/users/block?id=${usersList.id}"/>" class="btn">Zablokuj</a>
                     </c:if>
                 </span>
                 </div>
@@ -58,8 +61,6 @@
         </div>
     </section>
 </header>
-
-
 <script src="<c:url value="../resources/css/style.css"/>"></script>
 </body>
 </html>

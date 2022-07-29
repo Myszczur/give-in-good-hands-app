@@ -9,7 +9,6 @@
       <nav class="container container--70">
         <ul class="nav--actions">
           <li class="logged-user">
-<%--            Witaj Agata--%>
               <sec:authorize access="isAuthenticated()">
                   <p>Witaj: <sec:authentication property="principal.username"/></p>
               </sec:authorize>
@@ -24,7 +23,6 @@
                   </form>
               </sec:authorize>
               </li>
-<%--              <li><a href="#">Wyloguj</a></li>--%>
             </ul>
           </li>
         </ul>
@@ -40,7 +38,7 @@
 
       <div class="slogan container container--90">
           <h2>
-            Dziękujemy za przesłanie formularza Na maila prześlemy wszelkie
+            Dziękujemy za przesłanie formularza. Na maila prześlemy wszelkie
             informacje o odbiorze.
           </h2>
       </div>

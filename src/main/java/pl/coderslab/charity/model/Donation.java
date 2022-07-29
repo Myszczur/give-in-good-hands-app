@@ -32,5 +32,10 @@ public class Donation {
     private LocalDate pickUpDate;
     private LocalTime pickUpTime;
     private String pickUpComment;
+    @ManyToOne
+    private User user;
+    private String status;
+    private String received;
+    private String created;
 
 }

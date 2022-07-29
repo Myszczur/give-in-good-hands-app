@@ -38,7 +38,7 @@
     <section class="steps">
         <div class="contact">
             <span class="description" style="font-size: 180%"><h3>Edycja Admina</h3></span>
-            <form:form method="post" modelAttribute="adminById">
+            <form:form method="post" modelAttribute="userById">
                 <form:hidden path="id"/>
                 <div class="form-group">
                     <form:input path="email" required="required"/>

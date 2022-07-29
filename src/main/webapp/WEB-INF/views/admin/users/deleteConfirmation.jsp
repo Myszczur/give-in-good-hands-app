@@ -30,16 +30,16 @@
 
     <div class="slogan container container--90">
         <h2>
-            Czy na pewno chcesz usunąć Admina ${AdminById.email} z bazy danych ?
+            Czy na pewno chcesz usunąć Admina ${userById.email} z bazy danych ?
         </h2>
-        <input type="hidden" name="id" value="${AdminById.id}"/>
-        <a href="<c:url  value="/admin/admins/delete?id=${AdminById.id}"/>">
+        <input type="hidden" name="id" value="${userById.id}"/>
+        <a href="<c:url  value="/admin/users/delete?id=${userById.id}"/>">
             <i></i><b>Tak</b> </a>
-        <a href="<c:url  value="/admin/admins"/>">
+        <a href="<c:url  value="/admin/users"/>">
             <i></i><b>Anuluj</b> </a>
     </div>
 </header>
-<script src="<c:url value="/resources/js/app.js"/>"></script>
+<script src="<c:url value="../resources/css/style.css"/>"></script>
 </body>
 </html>
 

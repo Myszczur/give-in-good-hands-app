@@ -27,7 +27,7 @@ public class AdminUserListController {
 
     @GetMapping("")
     public String usersList(Model model) {
-        model.addAttribute("userList", userRepository.findAllByRolesOrderByEmail(roleRepository.getById(1)));
+        model.addAttribute("usersList", userRepository.findAllByRolesOrderByEmail(roleRepository.getById(4)));
         return "/admin/users/userslist";
     }
 
@@ -49,7 +49,7 @@ public class AdminUserListController {
     @GetMapping("/add")
     public String addAdmin(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("users", userRepository.findAllByRolesOrderByEmail(roleRepository.getById(1)));
+        model.addAttribute("users", userRepository.findAllByRolesOrderByEmail(roleRepository.getById(4)));
         return "/admin/users/add";
     }
 
@@ -59,7 +59,7 @@ public class AdminUserListController {
             return "/admin/users/edit";
         }
         Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.getById(1));
+        roles.add(roleRepository.getById(2));
         user.setRoles(roles);
         userRepository.save(user);
         return "redirect:/admin/users";
@@ -77,7 +77,7 @@ public class AdminUserListController {
             return "/admin/users/adduser";
         }
         Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.getById(1));
+        roles.add(roleRepository.getById(4));
         user.setRoles(roles);
         userRepository.save(user);
         return "redirect:/admin/users";
@@ -85,13 +85,16 @@ public class AdminUserListController {
 
     @GetMapping("/delete/{id}")
     public String delete(@PathVariable Long id, Model model) {
-        model.addAttribute("AdminById", userRepository.getById(id));
+        model.addAttribute("userById", userRepository.getById(id));
         return "/admin/users/deleteConfirmation";
     }
 
     @GetMapping(value = "/delete")
     public String delete(@RequestParam Long id) {
-        userRepository.deleteById(id);
+        User userToDelete = userRepository.getOne(id);
+        userToDelete.setRoles(null);
+        userRepository.save(userToDelete);
+        userRepository.delete(userToDelete);
         return "redirect:/admin/users";
     }
 

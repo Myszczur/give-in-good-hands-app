@@ -1,20 +1,37 @@
 package pl.coderslab.charity.valid;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import pl.coderslab.charity.repository.UserRepository;
+import pl.coderslab.charity.service.UserService;
+
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+import java.text.MessageFormat;
 
+@Component
+@RequiredArgsConstructor
 public class EmailValidator implements ConstraintValidator<EmailUnique, String> {
 
+    private final UserRepository userRepository;
+
     @Override
-    public void initialize(EmailUnique constraintAnnotation) {
+    public void initialize(EmailUnique emailUnique) {
+
     }
 
     @Override
     public boolean isValid(String email, ConstraintValidatorContext cxt) {
 
-        if (email == null) {
-            return true;
+        boolean isExistEmail = userRepository.existsByEmail(email);
+
+        if (isExistEmail) {
+            cxt.disableDefaultConstraintViolation();
+            cxt.buildConstraintViolationWithTemplate(
+                            MessageFormat.format("Email {0} already exists!", email))
+                    .addConstraintViolation();
         }
-        return email.isEmpty();
+        return !isExistEmail;
     }
 }

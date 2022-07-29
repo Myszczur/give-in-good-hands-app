@@ -37,25 +37,20 @@
         <div class="contact">
             <span class="description" style="font-size: 180%"><h3>Twoje dary</h3></span>
 
-<%--            <c:forEach items="${currentUserDonations}" var="currentUserDonations">--%>
-<%--                <div class="steps--container">--%>
-<%--                <span class="description" style="font-size: 180%">--%>
-<%--                    <div class="title">Email: ${currentUserDonations.email}</div>--%>
-<%--                    <div class="title">Imię: ${currentUserDonations.firstName}</div>--%>
-<%--                    <div class="title">Nazwisko: ${currentUserDonations.lastName}</div>--%>
-<%--                </span>--%>
-<%--                    <span>--%>
-<%--                    <a href="<c:url value="/admin/users/edit?id=${userList.id}"/>" class="btn">Edytuj</a>--%>
-<%--                    <a href="<c:url value="/admin/users/delete/${userList.id}"/>" class="btn">Usuń</a>--%>
-<%--                        <c:if test="${userList.accountNonBlocked == false}">--%>
-<%--                            <a href="<c:url value="/admin/users/block?id=${userList.id}"/>" class="btn">Odblokuj</a>--%>
-<%--                        </c:if>--%>
-<%--                    <c:if test="${userList.accountNonBlocked == true}">--%>
-<%--                        <a href="<c:url value="/admin/users/block?id=${userList.id}"/>" class="btn">Zablokuj</a>--%>
-<%--                    </c:if>--%>
-<%--                </span>--%>
-<%--                </div>--%>
-<%--            </c:forEach>--%>
+            <c:forEach items="${currentUserDonations}" var="currentUserDonations">
+                <div class="steps--container">
+                <span class="description" style="font-size: 180%">
+                    <div class="title">Miasto: ${currentUserDonations.city}</div>
+                    <div class="title">Data: ${currentUserDonations.pickUpDate}</div>
+                    <div class="title">Fundacja: ${currentUserDonations.institution.name}</div>
+                    <div class="title">Status: ${currentUserDonations.status}</div>
+                    <div class="title">Status: ${currentUserDonations.donation.recived}</div>
+                </span>
+                    <span>
+                    <a href="<c:url value="/admin/users/edit?id=${userList.id}"/>" class="btn">Szczegóły</a>
+                </span>
+                </div>
+            </c:forEach>
         </div>
     </section>
 </header>

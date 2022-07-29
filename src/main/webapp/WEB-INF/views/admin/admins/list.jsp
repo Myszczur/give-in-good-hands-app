@@ -14,6 +14,9 @@
                 </sec:authorize>
 
                 <ul class="dropdown">
+                    <li><a href="<c:url value="/admin/admin"/>">Panel główny</a></li>
+                    <li><a href="<c:url value="/admin/users"/>">Użytkownicy</a></li>
+                    <li><a href="<c:url value="/admin/donations"/>">Dary</a></li>
                     <li> <sec:authorize access="isAuthenticated()">
                         <form action="<c:url value="/logout"/>" method="post">
                             <input type="submit" value="Wyloguj">
@@ -52,4 +55,6 @@
         </div>
     </section>
 </header>
-<%@ include file="/WEB-INF/footer.jsp" %>
+<script src="<c:url value="../../../resources/css/style.css"/>"></script>
+</body>
+</html>

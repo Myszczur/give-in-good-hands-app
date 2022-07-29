@@ -38,10 +38,10 @@
     <section class="steps">
         <div class="contact">
             <span class="description" style="font-size: 180%"><h3>Edytuj dane</h3></span>
-            <form:form method="post" modelAttribute="currentUser">
-            <form:hidden path="id"/><br/>
+            <form:form method="post" modelAttribute="user">
             <div class="form-group">
-                Email: <form:input path="email" required="required"/>
+                Email:
+                <form:input path="email" required="required"/>
                 <form:errors path="email" cssStyle="color: red; margin: 5px; font-size: 15px"/>
             </div>
             <div class="form-group">
@@ -53,15 +53,19 @@
                 <form:errors path="lastName" cssStyle="color: red; margin: 5px; font-size: 15px"/>
             </div>
             <div class="form-group">
-                Hasło: <form:input path="password"/>
+                Stare hasło: <form:input path="password"/>
                 <form:errors path="password" cssStyle="color: red; margin: 5px; font-size: 15px"/>
+            </div>
+            <div class="form-group">
+                Nowe hasło: <input type="passwordToChange" name="passwordToChange" placeholder=""/></br>
+                Jeśli nie chcesz zmieniać hasła, zostaw pole puste.
             </div>
         </div>
         <button class="btn" type="submit">Zapisz</button>
         </form:form>
     </section>
 </header>
-<script src="<c:url value="../resources/css/style.css"/>"></script>
+<script src="<c:url value="../../../resources/css/style.css"/>"></script>
 </body>
 </html>
 
