@@ -44,10 +44,14 @@
                     <div class="title">Data: ${currentUserDonations.pickUpDate}</div>
                     <div class="title">Fundacja: ${currentUserDonations.institution.name}</div>
                     <div class="title">Status: ${currentUserDonations.status}</div>
-                    <div class="title">Status: ${currentUserDonations.donation.recived}</div>
+                   <c:if test="${not empty currentUserDonations.received}">
+                        <div class="subtitle">
+                            Odebrano: <span>${currentUserDonations.received}</span>
+                        </div>
+                    </c:if>
                 </span>
                     <span>
-                    <a href="<c:url value="/admin/users/edit?id=${userList.id}"/>" class="btn">Szczegóły</a>
+                    <a href="<c:url value="/user/show/${currentUserDonations.id}"/>" class="btn">Szczegóły</a>
                 </span>
                 </div>
             </c:forEach>

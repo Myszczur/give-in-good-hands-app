@@ -16,6 +16,7 @@ import pl.coderslab.charity.model.Donation;
 import pl.coderslab.charity.service.UserService;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @AllArgsConstructor
@@ -42,7 +43,8 @@ public class DonationController {
     public String addDonations(@AuthenticationPrincipal UserDetails userDetails, Donation donation) {
         User user = userService.findByEmail(userDetails.getUsername());
         donation.setStatus("Nieodebrane");
-        donation.setCreated(String.valueOf(LocalDateTime.now()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        donation.setCreated(LocalDateTime.now().format(formatter));
         donation.setUser(user);
         donationRepository.save(donation);
         return "donations/form-confirmation";

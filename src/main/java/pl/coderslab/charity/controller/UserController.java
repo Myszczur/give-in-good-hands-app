@@ -6,17 +6,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import pl.coderslab.charity.model.Donation;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
-import java.util.Collections;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @AllArgsConstructor
@@ -24,7 +23,6 @@ import java.util.Collections;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
     private final DonationRepository donationRepository;
 
 
@@ -61,6 +59,23 @@ public class UserController {
         currentUserEdit.setLastName(user.getLastName());
         userService.editUser(currentUserEdit);
         return "redirect:/user";
+    }
+
+    @GetMapping("/show/{id}")
+    public String userDonationDetails(Model model, @PathVariable Long id) {
+        model.addAttribute("donations", donationRepository.getOne(id));
+        return "/user/show";
+    }
+
+    @GetMapping("/received/{id}")
+    public String userDonationReceived(Model model, @PathVariable Long id) {
+        Donation receivedDonation = donationRepository.getOne(id);
+        receivedDonation.setStatus("Odebrane");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        receivedDonation.setReceived(LocalDateTime.now().format(formatter));
+        donationRepository.save(receivedDonation);
+        model.addAttribute("donations", donationRepository.getOne(id));
+        return "/user/show";
     }
 
 
