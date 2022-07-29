@@ -1,10 +1,8 @@
 package pl.coderslab.charity.valid;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.coderslab.charity.repository.UserRepository;
-import pl.coderslab.charity.service.UserService;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

@@ -25,10 +25,10 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String register(@Valid User user, BindingResult result, @RequestParam String matchingPassword) {
-        if(!user.getPassword().equals(matchingPassword)) {
+        if (!user.getPassword().equals(matchingPassword)) {
             return "redirect:/register/error";
         }
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "/login/register";
         }
         userService.saveUser(user);
@@ -37,17 +37,17 @@ public class RegisterController {
 
     @GetMapping("/register/error")
     public String registerError(Model model) {
-        model.addAttribute("user",new User());
+        model.addAttribute("user", new User());
         model.addAttribute("error", "error");
         return "/login/register";
     }
 
     @PostMapping("/register/error")
     public String registerError(@Valid User user, BindingResult result, @RequestParam String matchingPassword) {
-        if(!user.getPassword().equals(matchingPassword)) {
+        if (!user.getPassword().equals(matchingPassword)) {
             return "redirect:/register/error";
         }
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "/login/register";
         }
         userService.saveUser(user);

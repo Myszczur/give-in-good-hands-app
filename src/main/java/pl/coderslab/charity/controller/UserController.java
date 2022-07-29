@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.model.Donation;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.DonationRepository;
-import pl.coderslab.charity.repository.UserRepository;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;

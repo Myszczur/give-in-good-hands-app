@@ -9,7 +9,6 @@ import pl.coderslab.charity.model.Role;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
-import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -20,7 +19,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class AdminUserListController {
 
-    private final UserService userService;
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
 

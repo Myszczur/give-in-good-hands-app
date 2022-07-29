@@ -9,7 +9,6 @@ import pl.coderslab.charity.model.Role;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
-import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -20,7 +19,6 @@ import java.util.Set;
 @AllArgsConstructor
 public class AdminsController {
 
-    private final UserService userService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
@@ -46,7 +44,7 @@ public class AdminsController {
     }
 
     @GetMapping("/add")
-    public String add( Model model) {
+    public String add(Model model) {
         model.addAttribute("user", new User());
         model.addAttribute("users", userRepository.findAllByRolesOrderByEmail(roleRepository.getById(1)));
         return "/admin/admins/add";

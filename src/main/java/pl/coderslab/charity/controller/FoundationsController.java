@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.coderslab.charity.model.Institution;
 import pl.coderslab.charity.repository.InstitutionRepository;
-import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
 
@@ -17,7 +16,6 @@ import javax.validation.Valid;
 public class FoundationsController {
 
     private final InstitutionRepository institutionRepository;
-    private final UserService userService;
 
 
     @GetMapping("")
@@ -42,7 +40,7 @@ public class FoundationsController {
     }
 
     @GetMapping("/add")
-    public String add( Model model) {
+    public String add(Model model) {
         model.addAttribute("foundation", new Institution());
         return "/admin/foundations/edit";
     }
@@ -57,7 +55,7 @@ public class FoundationsController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id,Model model) {
+    public String delete(@PathVariable Long id, Model model) {
         model.addAttribute("foundation", institutionRepository.getById(id));
         return "/admin/foundations/deleteConfirmation";
     }

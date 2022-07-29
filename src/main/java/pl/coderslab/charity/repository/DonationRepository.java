@@ -16,5 +16,6 @@ public interface DonationRepository extends JpaRepository<Donation, Long> {
 
     @Query("SELECT COUNT(d.id) FROM Donation d")
     Integer countDonatedCategory();
+
     List<Donation> findAllByUserIdOrderByStatusDescReceivedDescCreatedDesc(Long userId);
 }

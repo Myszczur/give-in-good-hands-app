@@ -4,6 +4,7 @@ package pl.coderslab.charity.valid;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import java.lang.annotation.*;
+
 @Documented
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
