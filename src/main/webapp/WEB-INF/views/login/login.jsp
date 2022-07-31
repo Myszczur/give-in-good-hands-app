@@ -32,12 +32,21 @@
             <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <c:if test="${error.equals('disabled')}">
+            <p style="color: red; margin: 5px; font-size: 15px">Musisz aktywować konto, sprawdż email! </p>
+        </c:if>
         <c:if test="${error.equals('error')}">
             <p style="color: red; margin: 5px; font-size: 15px">Niepoprawny Email bądż Hasło! </p>
+        </c:if>
+        <c:if test="${error.equals('noExist')}">
+            <p style="color: red; margin: 5px; font-size: 15px">Podany użytkownik nie istnieje! </p>
         </c:if>
         <c:if test="${error.equals('blocked')}">
             <p style="color: red; margin: 5px; font-size: 15px">Użytkownik został zablokowany, skontaktuj się z
                 administratorem. </p>
+        </c:if>
+        <c:if test="${error.equals('tokenEnabled')}">
+            <p style="color: cornflowerblue; margin: 5px; font-size: 15px">Potwierdzenie rejestracji zostało wysłąne na email! </p>
         </c:if>
         <div class="form-group form-group--buttons">
             <a href="<c:url value="/register"/>" class="btn btn--without-border">Załóż konto</a>

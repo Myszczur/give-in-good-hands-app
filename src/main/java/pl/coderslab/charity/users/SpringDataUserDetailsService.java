@@ -26,6 +26,10 @@ public class SpringDataUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByEmail(username);
 
+        boolean accountNonExpired = true;
+        boolean credentialsNonExpired = true;
+        boolean accountNonLocked = true;
+
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }
@@ -35,6 +39,9 @@ public class SpringDataUserDetailsService implements UserDetailsService {
                 grantedAuthorities.add(new SimpleGrantedAuthority(r.getName())));
 
         return new org.springframework.security.core.userdetails.User(
-                user.getEmail(), user.getPassword(), grantedAuthorities);
+                user.getEmail(), user.getPassword(), user.isEnabled(),
+                accountNonExpired,
+                credentialsNonExpired,
+                accountNonLocked,  grantedAuthorities);
     }
 }

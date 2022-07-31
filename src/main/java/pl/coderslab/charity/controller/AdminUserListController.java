@@ -99,10 +99,8 @@ public class AdminUserListController {
     @GetMapping("/block")
     public String block(@RequestParam Long id) {
         User userToBlock = userRepository.getById(id);
-        userToBlock.setAccountNonBlocked(!userToBlock.isAccountNonBlocked());
+        userToBlock.setAccountNonLocked(!userToBlock.isAccountNonLocked());
         userRepository.save(userToBlock);
         return "redirect:/admin/users";
     }
-
-
 }

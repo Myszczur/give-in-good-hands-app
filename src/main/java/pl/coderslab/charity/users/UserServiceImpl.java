@@ -40,8 +40,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
-        user.setAccountNonBlocked(true);
+        user.setEnabled(false);
+        user.setAccountNonLocked(true);
+        user.setAccountNonExpired(true);
         Role userRole = roleRepository.findByName("ROLE_USER");
         user.setRoles(new HashSet<>(List.of(userRole)));
         userRepository.save(user);
