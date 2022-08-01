@@ -18,7 +18,6 @@ import pl.coderslab.charity.service.VerificationTokenService;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @AllArgsConstructor
@@ -45,7 +44,7 @@ public class RegisterController {
             return "/login/register";
         }
         userService.saveUser(user);
-        VerificationToken token = tokenService.createToken(user);
+//        VerificationToken token = tokenService.createToken(user);
 //        String subject = "Potwierdż sówj adres email:";
 //        String text = "Link: " + "http://localhost:8080/register/" + token.getToken();
 //        emailService.sendSimpleMessage(user.getEmail(), subject, text);

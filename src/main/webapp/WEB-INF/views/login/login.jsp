@@ -7,12 +7,12 @@
 <header>
     <nav class="container container--70">
         <ul class="nav--actions">
-            <li><a href="#">Zaloguj</a></li>
-            <li class="highlighted"><a href="#">Załóż konto</a></li>
+            <li><a href="/login">Zaloguj</a></li>
+            <li class="/register"><a href="#">Załóż konto</a></li>
         </ul>
 
         <ul>
-            <li><a href="403.jsp" class="btn btn--without-border active">Start</a></li>
+            <li><a href="/" class="btn btn--without-border active">Start</a></li>
             <li><a href="403.jsp#steps" class="btn btn--without-border">O co chodzi?</a></li>
             <li><a href="403.jsp#about-us" class="btn btn--without-border">O nas</a></li>
             <li><a href="403.jsp#help" class="btn btn--without-border">Fundacje i organizacje</a></li>
@@ -29,7 +29,7 @@
         </div>
         <div class="form-group">
             <input type="password" name="password" placeholder="Hasło"/>
-            <a href="#" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
+            <a href="/reset" class="btn btn--small btn--without-border reset-password">Przypomnij hasło</a>
         </div>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <c:if test="${error.equals('disabled')}">
@@ -47,6 +47,18 @@
         </c:if>
         <c:if test="${error.equals('tokenEnabled')}">
             <p style="color: cornflowerblue; margin: 5px; font-size: 15px">Potwierdzenie rejestracji zostało wysłąne na email! </p>
+        </c:if>
+        <c:if test="${error.equals('enabled')}">
+            <p style="color: cornflowerblue; margin: 5px; font-size: 15px">Konto zostało aktywowane! </p>
+        </c:if>
+        <c:if test="${error.equals('noEnabled')}">
+            <p style="color: red; margin: 5px; font-size: 15px">Token wygasł! </p>
+        </c:if>
+        <c:if test="${error.equals('password')}">
+            <p style="color: cornflowerblue; margin: 5px; font-size: 15px">Email z potwierdzeniem zmiany hasła został wysłąny! </p>
+        </c:if>
+        <c:if test="${error.equals('success')}">
+            <p style="color: cornflowerblue; margin: 5px; font-size: 15px">Hasło zostało poprawnie zmienione! </p>
         </c:if>
         <div class="form-group form-group--buttons">
             <a href="<c:url value="/register"/>" class="btn btn--without-border">Załóż konto</a>
