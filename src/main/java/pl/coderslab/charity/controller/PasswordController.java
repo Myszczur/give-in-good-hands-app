@@ -47,7 +47,7 @@ public class PasswordController {
     public String resetPasswordForm(@RequestParam String token, Model model) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
 
-        if(LocalDateTime.now().isBefore(LocalDateTime.parse(verificationToken.getExpiryDate()))){
+        if (LocalDateTime.now().isBefore(LocalDateTime.parse(verificationToken.getExpiryDate()))) {
             model.addAttribute("user", new User());
             model.addAttribute("token", verificationToken);
             return "/login/password";
@@ -58,11 +58,11 @@ public class PasswordController {
     @PostMapping("/password/{token}")
     public String resetPasswordForm(@Valid User user, BindingResult result, @PathVariable String token, Model model, @RequestParam String checkPassword) {
 
-        if(!user.getPassword().equals(checkPassword)) {
+        if (!user.getPassword().equals(checkPassword)) {
             model.addAttribute("error", "error");
             return "redirect:/password/error/";
         }
-        if(result.hasErrors()) {
+        if (result.hasErrors()) {
             return "/login/password";
         }
 

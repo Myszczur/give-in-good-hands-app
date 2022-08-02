@@ -44,17 +44,17 @@ public class RegisterController {
             return "/login/register";
         }
         userService.saveUser(user);
-//        VerificationToken token = tokenService.createToken(user);
-//        String subject = "Potwierdż sówj adres email:";
-//        String text = "Link: " + "http://localhost:8080/register/" + token.getToken();
-//        emailService.sendSimpleMessage(user.getEmail(), subject, text);
+        VerificationToken token = tokenService.createToken(user);
+        String subject = "Potwierdż sówj adres email:";
+        String text = "Link: " + "http://localhost:8080/register/" + token.getToken();
+        emailService.sendSimpleMessage(user.getEmail(), subject, text);
         return "redirect:/login/tokenEnabled";
     }
 
     @GetMapping("/register/{token}")
     public String registerToken(@PathVariable String token) {
         VerificationToken verificationToken = tokenRepository.findByToken(token);
-        if(LocalDateTime.now().isBefore(LocalDateTime.parse(verificationToken.getExpiryDate()))) {
+        if (LocalDateTime.now().isBefore(LocalDateTime.parse(verificationToken.getExpiryDate()))) {
             User user = verificationToken.getUser();
             user.setEnabled(true);
             userRepository.save(user);

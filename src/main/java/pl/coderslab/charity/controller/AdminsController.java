@@ -1,6 +1,8 @@
 package pl.coderslab.charity.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +14,7 @@ import pl.coderslab.charity.repository.UserRepository;
 
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Controller
@@ -51,7 +54,7 @@ public class AdminsController {
     }
 
     @PostMapping(value = "/add")
-    public String add(User user, BindingResult result) {
+    public String add(User user) {
         Set<Role> roles = new HashSet<>();
         roles.add(roleRepository.getById(2));
         user.setRoles(roles);
@@ -60,9 +63,14 @@ public class AdminsController {
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable Long id, Model model) {
-        model.addAttribute("AdminById", userRepository.getById(id));
-        return "/admin/admins/deleteConfirmation";
+    public String delete(@PathVariable Long id, Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        User user = userRepository.findByEmail(userDetails.getUsername());
+        User userToDelete = userRepository.getOne(id);
+        if (!Objects.equals(userToDelete.getId(), user.getId())) {
+            model.addAttribute("AdminById", userRepository.getById(id));
+            return "/admin/admins/deleteConfirmation";
+        }
+        return "redirect:/admin/admins";
     }
 
     @GetMapping(value = "/delete")
