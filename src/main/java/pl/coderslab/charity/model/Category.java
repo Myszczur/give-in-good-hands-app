@@ -1,4 +1,4 @@
-package pl.coderslab.charity.category;
+package pl.coderslab.charity.model;
 
 import lombok.Data;
 import lombok.ToString;
