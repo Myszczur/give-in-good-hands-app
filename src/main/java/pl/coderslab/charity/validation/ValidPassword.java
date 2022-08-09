@@ -1,4 +1,4 @@
-package pl.coderslab.charity.valid;
+package pl.coderslab.charity.validation;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

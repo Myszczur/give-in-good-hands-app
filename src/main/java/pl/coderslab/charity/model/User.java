@@ -2,11 +2,9 @@ package pl.coderslab.charity.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import pl.coderslab.charity.valid.EmailUnique;
-import pl.coderslab.charity.valid.ValidPassword;
+import pl.coderslab.charity.validation.EmailUnique;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;

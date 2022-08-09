@@ -1,14 +1,16 @@
 package pl.coderslab.charity.email;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender javaMailSender;
+
+    public EmailServiceImpl(JavaMailSender javaMailSender) {
+        this.javaMailSender = javaMailSender;
+    }
 
     @Override
     public void sendSimpleMessage(

@@ -1,4 +1,4 @@
-package pl.coderslab.charity.valid;
+package pl.coderslab.charity.validation;
 
 import org.passay.*;
 

@@ -1,4 +1,4 @@
-package pl.coderslab.charity.controller;
+package pl.coderslab.charity.controller.user;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -43,11 +43,11 @@ public class RegisterController {
         if (result.hasErrors()) {
             return "/login/register";
         }
-        userService.saveUser(user);
         VerificationToken token = tokenService.createToken(user);
-        String subject = "Potwierdż sówj adres email:";
-        String text = "Link: " + "http://localhost:8080/register/" + token.getToken();
-        emailService.sendSimpleMessage(user.getEmail(), subject, text);
+        userService.saveUser(user);
+//        String subject = "Potwierdż sówj adres email:";
+//        String text = "Link: " + "http://localhost:8080/register/" + token.getToken();
+//        emailService.sendSimpleMessage(user.getEmail(), subject, text);
         return "redirect:/login/tokenEnabled";
     }
 
