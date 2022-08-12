@@ -7,14 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.charity.model.Donation;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.DonationRepository;
+import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @AllArgsConstructor
@@ -23,22 +21,18 @@ public class UserController {
 
     private final UserService userService;
     private final DonationRepository donationRepository;
+    private final DonationService donationService;
 
 
     @GetMapping("")
     public String userPanel(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        User currentUser = userService.findByEmail(userDetails.getUsername());
-        model.addAttribute("currentUserDonations",
-                donationRepository.findAllByUserIdOrderByStatusDescReceivedDescCreatedDesc(currentUser.getId()));
+        model.addAttribute("currentUserDonations", donationService.findAllDonationByUser(userDetails));
         return "/user/user";
     }
 
     @GetMapping("/edit")
     public String edit(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-        User currentUser = userService.findByEmail(userDetails.getUsername());
-        currentUser.setPassword("");
-        model.addAttribute("user", currentUser);
-
+        model.addAttribute("user", userService.showUserToEdit(userDetails));
         return "/user/edit";
     }
 
@@ -50,13 +44,7 @@ public class UserController {
             model.addAttribute("user", currentUserEdit);
             return "/user/edit";
         }
-        if (!passwordToChange.isEmpty()) {
-            currentUserEdit.setPassword(passwordToChange);
-        }
-        currentUserEdit.setEmail(user.getEmail());
-        currentUserEdit.setFirstName(user.getFirstName());
-        currentUserEdit.setLastName(user.getLastName());
-        userService.editUser(currentUserEdit);
+        userService.editUser(userService.currentUserEdit(userDetails, user, passwordToChange));
         return "redirect:/user";
     }
 
@@ -68,14 +56,8 @@ public class UserController {
 
     @GetMapping("/received/{id}")
     public String userDonationReceived(Model model, @PathVariable Long id) {
-        Donation receivedDonation = donationRepository.getOne(id);
-        receivedDonation.setStatus("Odebrane");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        receivedDonation.setReceived(LocalDateTime.now().format(formatter));
-        donationRepository.save(receivedDonation);
+        donationService.updateDonation(id);
         model.addAttribute("donations", donationRepository.getOne(id));
         return "/user/show";
     }
-
-
 }

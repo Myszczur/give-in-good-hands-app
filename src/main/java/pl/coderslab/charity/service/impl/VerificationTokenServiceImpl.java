@@ -1,10 +1,11 @@
-package pl.coderslab.charity.service;
+package pl.coderslab.charity.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.model.VerificationToken;
 import pl.coderslab.charity.repository.VerificationTokenRepository;
+import pl.coderslab.charity.service.VerificationTokenService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class VerificationTokenServiceImpl implements VerificationTokenService{
+public class VerificationTokenServiceImpl implements VerificationTokenService {
     
     private static final int EXPIRATION = 60 * 24;
     private final VerificationTokenRepository tokenRepository;

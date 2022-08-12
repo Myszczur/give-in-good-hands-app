@@ -5,14 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.charity.model.Role;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
+import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin/users")
@@ -21,6 +19,7 @@ public class AdminUserListController {
 
     private final RoleRepository roleRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
 
     @GetMapping("")
@@ -56,10 +55,7 @@ public class AdminUserListController {
         if (result.hasErrors()) {
             return "/admin/users/edit";
         }
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.getById(2));
-        user.setRoles(roles);
-        userRepository.save(user);
+        userService.addAdmin(user);
         return "redirect:/admin/users";
     }
 
@@ -74,10 +70,7 @@ public class AdminUserListController {
         if (result.hasErrors()) {
             return "/admin/users/adduser";
         }
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.getById(4));
-        user.setRoles(roles);
-        userRepository.save(user);
+        userService.addUser(user);
         return "redirect:/admin/users";
     }
 
@@ -89,18 +82,13 @@ public class AdminUserListController {
 
     @GetMapping(value = "/delete")
     public String delete(@RequestParam Long id) {
-        User userToDelete = userRepository.getOne(id);
-        userToDelete.setRoles(null);
-        userRepository.save(userToDelete);
-        userRepository.delete(userToDelete);
+        userService.deleteUser(id);
         return "redirect:/admin/users";
     }
 
     @GetMapping("/block")
     public String block(@RequestParam Long id) {
-        User userToBlock = userRepository.getById(id);
-        userToBlock.setAccountNonLocked(!userToBlock.isAccountNonLocked());
-        userRepository.save(userToBlock);
+        userService.blockUser(id);
         return "redirect:/admin/users";
     }
 }

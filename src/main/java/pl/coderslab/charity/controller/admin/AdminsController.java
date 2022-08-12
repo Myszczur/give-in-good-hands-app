@@ -7,15 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.coderslab.charity.model.Role;
 import pl.coderslab.charity.model.User;
 import pl.coderslab.charity.repository.RoleRepository;
 import pl.coderslab.charity.repository.UserRepository;
+import pl.coderslab.charity.service.UserService;
 
 import javax.validation.Valid;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/admin/admins")
@@ -24,6 +22,7 @@ public class AdminsController {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserService userService;
 
     @GetMapping("")
     public String adminList(Model model) {
@@ -55,10 +54,7 @@ public class AdminsController {
 
     @PostMapping(value = "/add")
     public String add(User user) {
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleRepository.getById(2));
-        user.setRoles(roles);
-        userRepository.save(user);
+        userService.addUserByAdmin(user);
         return "redirect:/admin/admins";
     }
 

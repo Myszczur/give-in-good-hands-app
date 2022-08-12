@@ -13,6 +13,7 @@ import pl.coderslab.charity.repository.DonationRepository;
 import pl.coderslab.charity.repository.InstitutionRepository;
 import pl.coderslab.charity.repository.CategoryRepository;
 import pl.coderslab.charity.model.Donation;
+import pl.coderslab.charity.service.DonationService;
 import pl.coderslab.charity.service.UserService;
 
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 @RequestMapping("/donations")
 public class DonationController {
 
-    private final DonationRepository donationRepository;
+    private final DonationService donationService;
     private final CategoryRepository categoryRepository;
     private final InstitutionRepository institutionRepository;
     private final UserService userService;
@@ -31,7 +32,6 @@ public class DonationController {
 
     @GetMapping("/add")
     public String addDonation(Model model) {
-
         model.addAttribute("categories", categoryRepository.findAll());
         model.addAttribute("institutions", institutionRepository.findAll());
         model.addAttribute("donation", new Donation());
@@ -42,11 +42,7 @@ public class DonationController {
     @PostMapping("/add")
     public String addDonations(@AuthenticationPrincipal UserDetails userDetails, Donation donation) {
         User user = userService.findByEmail(userDetails.getUsername());
-        donation.setStatus("Nieodebrane");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        donation.setCreated(LocalDateTime.now().format(formatter));
-        donation.setUser(user);
-        donationRepository.save(donation);
+        donationService.addDonations(donation, user);
         return "donations/form-confirmation";
     }
 
